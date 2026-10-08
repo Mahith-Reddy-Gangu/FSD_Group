@@ -11,6 +11,33 @@ CampusLoop is a full-stack web application that helps students exchange useful r
 
 The platform reduces student expenses, improves communication, and gives students a simple way to report and track campus issues.
 
+## Run locally
+
+### Prerequisites
+
+- Node.js 20.19 or newer in the 20.x line, 22.12 or newer in the 22.x line, or a later major release
+- npm, included with Node.js
+- Git, if cloning the repository
+
+### Windows
+
+Clone or download the repository, then double-click `Start-CampusLoop.bat`. The first run installs dependencies from the committed lockfile; later runs reuse them. The script starts the API and website and opens the website in your browser.
+
+### macOS or Linux
+
+```sh
+git clone https://github.com/Mahith-Reddy-Gangu/FSD_Group.git
+cd FSD_Group
+npm ci
+npm run dev:full
+```
+
+Open <http://localhost:5173>. Stop the development server with `Ctrl+C`.
+
+### Local data
+
+The API creates `server/data.json` for local persistence. This file is intentionally ignored by Git, so each developer gets their own local accounts and data; it is not shared when code is pushed or pulled. This project currently uses that local JSON file rather than a shared hosted database.
+
 ## Problem Statement
 
 Students often purchase items they need only temporarily, miss important campus updates, struggle to recover lost belongings, and do not have a clear way to report infrastructure problems. CampusLoop brings these activities together in one organized platform.
@@ -118,9 +145,8 @@ Features:
 
 - React.js
 - Vite
-- Tailwind CSS
-- React Router
-- Axios
+- GSAP and Framer Motion
+- Three.js and Vanta.js
 
 ### Backend
 
@@ -128,166 +154,34 @@ Features:
 - Express.js
 - REST API
 - JSON Web Tokens for authentication
-- bcrypt for password hashing
+- bcryptjs for password hashing
 
 ### Database and Storage
 
-- MongoDB
-- MongoDB Atlas for cloud database hosting
-- Mongoose for database modeling
-- Cloudinary for image storage
+- Local JSON persistence in `server/data.json`
 
 ### Development and Deployment Tools
 
 - Visual Studio Code
 - Git and GitHub
-- Postman for API testing
-- Vercel for frontend deployment
-- Render for backend deployment
 
 ## System Architecture
 
 ```text
-React Frontend
+React + Vite Frontend
       |
-      | HTTP requests using Axios
+      | HTTP requests
       v
 Express.js REST API
       |
-      | Mongoose
+      | Local JSON persistence
       v
-MongoDB Atlas
-
-Cloudinary stores uploaded images.
-JWT protects authenticated routes.
+server/data.json
 ```
 
-## Database Design
+## Local persistence
 
-### Users Collection
-
-```text
-_id
-name
-email
-password
-department
-year
-phone
-role
-rating
-createdAt
-```
-
-### Resources Collection
-
-```text
-_id
-title
-description
-category
-condition
-imageUrl
-ownerId
-exchangeType
-availabilityStatus
-createdAt
-```
-
-### Requests Collection
-
-```text
-_id
-resourceId
-requesterId
-ownerId
-message
-status
-requestedAt
-returnedAt
-```
-
-### Announcements Collection
-
-```text
-_id
-title
-content
-category
-authorId
-isPinned
-publishedAt
-```
-
-### Lost and Found Collection
-
-```text
-_id
-title
-description
-type
-category
-location
-itemDate
-imageUrl
-reportedBy
-status
-createdAt
-```
-
-### Events Collection
-
-```text
-_id
-title
-description
-category
-date
-time
-location
-imageUrl
-createdBy
-capacity
-createdAt
-```
-
-### Event Registrations Collection
-
-```text
-_id
-eventId
-studentId
-registeredAt
-```
-
-### Maintenance Requests Collection
-
-```text
-_id
-title
-description
-category
-location
-imageUrl
-submittedBy
-assignedTo
-status
-adminComment
-createdAt
-resolvedAt
-```
-
-### Reviews Collection
-
-```text
-_id
-reviewerId
-reviewedUserId
-requestId
-rating
-comment
-createdAt
-```
+The Express API persists application state in `server/data.json`. That file is created and maintained locally and is excluded from Git; the API implementation in `server/index.js` is the source of truth for the data structure.
 
 ## Main Pages
 
