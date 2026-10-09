@@ -19,24 +19,29 @@ The platform reduces student expenses, improves communication, and gives student
 - npm, included with Node.js
 - Git, if cloning the repository
 
-### Windows
-
-Clone or download the repository, then double-click `Start-CampusLoop.bat`. The first run installs dependencies from the committed lockfile; later runs reuse them. The script starts the API and website and opens the website in your browser.
-
-### macOS or Linux
+### Get the project
 
 ```sh
 git clone https://github.com/Mahith-Reddy-Gangu/FSD_Group.git
 cd FSD_Group
+```
+
+### Windows
+
+Double-click `Start-CampusLoop.bat`. It installs dependencies from the committed lockfile the first time, then starts the API and website and opens the website in your browser. Later runs reuse the installed dependencies.
+
+### macOS or Linux
+
+```sh
 npm ci
 npm run dev:full
 ```
 
 Open <http://localhost:5173>. Stop the development server with `Ctrl+C`.
 
-### Local data
+### Data on each laptop
 
-The API creates `server/data.json` for local persistence. This file is intentionally ignored by Git, so each developer gets their own local accounts and data; it is not shared when code is pushed or pulled. This project currently uses that local JSON file rather than a shared hosted database.
+The API creates `server/data.json` for local persistence. This file is intentionally ignored by Git, so each person gets their own local accounts and data; pushing or pulling the repository does not sync accounts or app data. The app currently uses this local JSON file rather than a shared hosted database.
 
 ## Problem Statement
 

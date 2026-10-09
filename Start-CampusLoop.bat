@@ -2,10 +2,35 @@
 setlocal
 cd /d "%~dp0"
 
-if not exist "node_modules\vite\bin\vite.js" (
-  echo CampusLoop dependencies are missing. Run npm install in this folder first.
+where node >nul 2>nul
+if errorlevel 1 (
+  echo Node.js is missing. Install Node.js 20.19+ or 22.12+ from https://nodejs.org/ and try again.
   pause
   exit /b 1
+)
+
+where npm >nul 2>nul
+if errorlevel 1 (
+  echo npm is missing. Reinstall Node.js from https://nodejs.org/ and try again.
+  pause
+  exit /b 1
+)
+
+node -e "const [major, minor] = process.versions.node.split('.').map(Number); if (!(major > 22 || (major === 22 && minor >= 12) || (major === 20 && minor >= 19))) process.exit(1)"
+if errorlevel 1 (
+  echo This project needs Node.js 20.19+ or 22.12+. Update Node.js and try again.
+  pause
+  exit /b 1
+)
+
+if not exist "node_modules\vite\bin\vite.js" (
+  echo Installing CampusLoop dependencies from package-lock.json...
+  call npm ci
+  if errorlevel 1 (
+    echo Dependency installation failed. Check your internet connection and npm output, then try again.
+    pause
+    exit /b 1
+  )
 )
 
 set "API_PORT="
